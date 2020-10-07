@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: exploration-kubernetes
+  name: exploration-kubernetes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exploration-kubernetes
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: exploration-kubernetes
+    spec:
+      containers:
+      - image: exploration-kubernetes:0.0.1-SNAPSHOT
+        name: exploration-kubernetes
+        resources: {}
+status: {}
