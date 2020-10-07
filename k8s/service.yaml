@@ -1,24 +1,16 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  creationTimestamp: null
+  name: exploration-kubernetes-load-balancer
   labels:
     app: exploration-kubernetes
-  name: exploration-kubernetes
 spec:
-  replicas: 1
+  type: LoadBalancer
+  #  type: ClusterIP
+  #  type: NodePort
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
   selector:
-    matchLabels:
-      app: exploration-kubernetes
-  strategy: {}
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: exploration-kubernetes
-    spec:
-      containers:
-      - image: exploration-kubernetes:0.0.1-SNAPSHOT
-        name: exploration-kubernetes
-        resources: {}
-status: {}
+    app: exploration-kubernetess

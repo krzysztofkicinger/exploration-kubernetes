@@ -1,24 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
+  name: exploration-kubernetes-application
   labels:
     app: exploration-kubernetes
-  name: exploration-kubernetes
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: exploration-kubernetes
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: exploration-kubernetes
     spec:
       containers:
-      - image: exploration-kubernetes:0.0.1-SNAPSHOT
-        name: exploration-kubernetes
-        resources: {}
-status: {}
+        - name: exploration-kubernetes-application
+          image: krzysztofkicinger/exploration-kubernetes:demo
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
